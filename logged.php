@@ -1,3 +1,8 @@
+<?php
+include("session.php");
+include("connection.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +57,11 @@ http://www.templatemo.com/tm-511-journey
                                 </div>
 
                                 <div class="ms-auto nav-item">
-                                    <a class="nav-link" href="#" data-toggle="modal" data-target="#Modal">Login / Registro</a>
+                                    <a class="nav-link" href="logout.php" data-toggle="modal" data-target="#Modal">
+                                        <?php
+                                        echo $_SESSION['username'];
+                                        ?>
+                                    </a>
                                 </div>
                                 </ul>
                             </div>
@@ -61,77 +70,7 @@ http://www.templatemo.com/tm-511-journey
                 </div> <!-- row -->
             </div> <!-- container -->
         </div> <!-- .tm-top-bar -->
-        <!-- Modal -->
-        <div class="modal fade" id="Modal" tabindex="100" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1041 !important;">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Inicio de Sesión / Registro</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Pestañas para cambiar entre formularios -->
-                        <ul class="nav nav-tabs" id="myTabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Registro</a>
-                            </li>
-                        </ul>
-                        <!-- Contenido de las pestañas -->
-                        <div class="tab-content" id="myTabsContent">
-                            <!-- Formulario de Login -->
-                            <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                                <form id="loginForm">
-                                    <!-- Formulario de inicio de sesión -->
-                                    <div class="form-group">
-                                        <label for="loginUsername">E-Mail</label>
-                                        <input type="email" class="form-control" id="loginMail" placeholder="Ingresa tu usuario">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="loginPassword">Contraseña</label>
-                                        <input type="password" class="form-control" id="loginPassword" placeholder="Ingresa tu contraseña">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                                </form>
-                            </div>
-                            <!-- Formulario de Registro -->
-                            <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                                <form id="registerForm">
-                                    <!-- Formulario de registro -->
-                                    <div class="form-group">
-                                        <label for="fullName">Nombre completo</label>
-                                        <input type="text" class="form-control" id="fullName" placeholder="Ingresa tu nombre completo">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="registerUsername">Nombre de Usuario</label>
-                                        <input type="text" class="form-control" id="registerUsername" placeholder="Ingresa tu nombre de usuario">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="registerEmail">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="registerEmail" placeholder="Ingresa tu correo electrónico">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="registerPassword">Contraseña</label>
-                                        <input type="password" class="form-control" id="registerPassword" placeholder="Ingresa tu contraseña">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="confirmPassword">Confirmar Contraseña</label>
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirma tu contraseña">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Registrarse</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <br>
-        <br><br>
         <br>
         <div class="tm-page-wrap mx-auto">
             <section class="tm-banner">
