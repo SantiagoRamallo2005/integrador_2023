@@ -4,7 +4,7 @@ CREATE TABLE `users` (
   `nombreVisible` varchar(50),
   `mail` varchar(50),
   `contrasena` varchar(50),
-  `admin` bool(1)
+  `admin` integer(1)
 );
 
 CREATE TABLE `comments` (
