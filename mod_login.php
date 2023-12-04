@@ -5,11 +5,11 @@ session_start();
 include("connection.php");
 
 // Obtener los valores del formulario de inicio de sesión
-$loginMail = $_POST['loginMail'];
-$loginPassword = $_POST['loginPassword'];
+$loginMail = mysqli_real_escape_string($conn, $_POST['loginMail']);
+$loginPassword = mysqli_real_escape_string($conn, $_POST['loginPassword']);
 
 // Buscar el usuario en la base de datos
-$sql = "SELECT mail, nombreVisible, contrasena FROM users WHERE mail = '$loginMail'";
+$sql = "SELECT * FROM users WHERE mail = '$loginMail'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -20,19 +20,17 @@ if ($result->num_rows > 0) {
     // Verificar la contraseña
     if (password_verify($loginPassword, $hashedPassword)) {
         // Iniciar sesión y establecer variables de sesión
-        $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['mail'] = $row['mail'];
-
-        header("Location: logged.php");
-        echo "Inicio de sesión exitoso";
+        echo 'exito';
+        $_SESSION['id'] = $row['id'];
+        
     } else {
-        echo "La contraseña no es válida";
+        echo "passError";
     }
 } else {
-    echo "Usuario no encontrado";
+    echo "inexistente";
 }
 
 // Cerrar la conexión
 $conn->close();
 ?>
+
