@@ -15,11 +15,15 @@ $(document).ready(function() {
                 loginMail: loginMail,
                 loginPassword: loginPassword
             },
+            dataType: "json",
             success: function(data) {
-                if (data == 'exito') {
+                if (data.status === 'success') {
                     console.log(data);
                     window.location = "logged.php";
-                } else {
+                } else if (data.status === 'admin') {
+                    console.log(data);
+                    window.location = "dashboard.php";
+                }else{
                     console.log(data);
                 }
             },

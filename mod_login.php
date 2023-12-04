@@ -20,14 +20,19 @@ if ($result->num_rows > 0) {
     // Verificar la contraseña
     if (password_verify($loginPassword, $hashedPassword)) {
         // Iniciar sesión y establecer variables de sesión
-        echo 'exito';
         $_SESSION['id'] = $row['id'];
+
+        if($row['adminValue'] === "1"){
+            echo json_encode(["status" => "admin"]);
+        }else{
+            echo json_encode(["status" => "success"]);
+        }
         
     } else {
-        echo "passError";
+        echo json_encode(["status" => "error"]);
     }
 } else {
-    echo "inexistente";
+    echo json_encode(["status" => "inexistente"]);
 }
 
 // Cerrar la conexión

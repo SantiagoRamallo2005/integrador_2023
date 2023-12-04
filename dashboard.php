@@ -1,3 +1,13 @@
+<?php
+include("sessionAdmin.php");
+include("connection.php");
+$id = $_SESSION['id'];
+$sql = "SELECT * FROM users WHERE id = '$id'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,27 +16,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/templatemo-style.css"> 
+    <link rel="stylesheet" href="css/templatemo-style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Administracion policia</title>
 </head>
 
 <body>
-<div class="w3-sidebar w3-bar-block containerA" style="width: 15%;" id="mySidebar">
+    <div class="w3-sidebar w3-bar-block containerA" style="width: 15%;" id="mySidebar">
 
         <div role="group" aria-label="Basic example" style="margin-top: 25%;">
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="ingresar_alumno.php"><div class="w3-bar-item w3-button">Carga de datos de alumnos</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="dashboard.php"><div class="w3-bar-item w3-button">Lista de alumnos</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="lista_armas.php"><div class="w3-bar-item w3-button">Lista de armas</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="lista_profesores.php"><div class="w3-bar-item w3-button">Lista de profesores</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="carga_prof.php"><div class="w3-bar-item w3-button">Carga de profesores</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="lista_aulas.php"><div class="w3-bar-item w3-button">Lista de aulas</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="lista_materias.php"><div class="w3-bar-item w3-button">Lista de materias</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="materia_notas.php"><div class="w3-bar-item w3-button">Cargar Notas</div></a>
-            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="asignacion_form.php"><div class="w3-bar-item w3-button">Asignacion de aulas</div></a>
-
-
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="dashboard.php">
+                <div class="w3-bar-item w3-button">Users</div>
+            </a>
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="admin_opiniones.php">
+                <div class="w3-bar-item w3-button">Lista de opiniones</div>
+            </a>
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="admin_sugerencias.php">
+                <div class="w3-bar-item w3-button">Lista de sugerencias</div>
+            </a>
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="admin_quejas.php">
+                <div class="w3-bar-item w3-button">Lista de quejas</div>
+            </a>
         </div>
     </div>
 
@@ -45,8 +56,56 @@
 
     <br>
 
+    <div class="container mt-5" style="margin-left: 20%;">
+        <div class="mb-3">
+            <label for="filtroNombre">Filtrar por NombreVisible:</label>
+            <input type="text" class="form-control" id="filtroNombre">
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>NombreVisible</th>
+                    <th>Mail</th>
+                    <th>Admin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaUsuarios">
+                <?php
+
+                // Consulta SQL para obtener todos los usuarios
+                $sql = "SELECT * FROM users";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Mostrar los usuarios en la tabla
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $row['id'] . "</td>";
+                        echo "<td>" . $row['nombre'] . "</td>";
+                        echo "<td>" . $row['nombreVisible'] . "</td>";
+                        echo "<td>" . $row['mail'] . "</td>";
+                        echo "<td>" . ($row['adminValue'] == 1 ? 'Sí' : 'No') . "</td>";
+                        echo "<td>";
+                        echo '<button class="btn btn-danger btn-ban" data-id-user="' . $row['id'] . '">Ban</button>';
+                        echo '<button class="btn btn-success btn-admin" data-id-user="' . $row['id'] . '">Admin</button>';
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "0 resultados";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/admin_panel.js"></script>
+
 </html>
