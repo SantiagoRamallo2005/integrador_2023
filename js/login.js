@@ -15,10 +15,20 @@ $(document).ready(function() {
                 loginMail: loginMail,
                 loginPassword: loginPassword
             },
+            dataType: "json",
             success: function(data) {
-                if (data == 'exito') {
+                if (data.status === 'success') {
                     console.log(data);
                     window.location = "logged.php";
+                } else if (data.status === 'admin') {
+                    console.log(data);
+                    window.location = "dashboard.php";
+                } else if (data.status === 'ban') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Usted ha sido banneado'
+                    });
                 } else {
                     console.log(data);
                 }

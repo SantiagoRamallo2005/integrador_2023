@@ -57,19 +57,20 @@ $row = $result->fetch_assoc();
     <br>
 
     <div class="container mt-5" style="margin-left: 16%;">
-        <div class="mb-3">
-            <label for="filtroNombre">Filtrar por NombreVisible:</label>
-            <input type="text" class="form-control" id="filtroNombre">
-        </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>NombreVisible</th>
-                    <th>Mail</th>
-                    <th>Admin</th>
-                    <th>Acciones</th>
+                    <th>Usuario</th>
+                    <th>Visibilidad</th>
+                    <th>Contenido</th>
+                    <th>Fecha</th>
+                    <th>
+                        <button id="pos" type="button" class="btn btn-outline-dark">Positivas  ↨</button>
+                    </th> 
+                    <th>
+                        <button id="neg" type="button" class="btn btn-outline-dark">Negativas  ↨</button>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -77,48 +78,63 @@ $row = $result->fetch_assoc();
                 <?php
 
                 // Consulta SQL para obtener todos los usuarios
-                $sql = "SELECT * FROM users";
+                $sql = "SELECT c.*, u.nombreVisible AS nombre_usuario FROM comments c
+                JOIN users u ON c.id_user = u.id
+                WHERE c.tipo = 'opinion'";
                 $result = $conn->query($sql);
 
-                if ($result->num_rows > 0) {
-                    // Mostrar los usuarios en la tabla
-                    while ($row = $result->fetch_assoc()) {
-                        $condicion = $row['condicion'];
-                        $admin = $row['adminValue'];
-                        echo "<tr>";
-                        echo "<td>" . $row['id'] . "</td>";
-                        echo "<td>" . $row['nombre'] . "</td>";
-                        echo "<td>" . $row['nombreVisible'] . "</td>";
-                        echo "<td>" . $row['mail'] . "</td>";
-                        echo "<td>" . ($row['adminValue'] == 1 ? 'Sí' : 'No') . "</td>";
-                        echo "<td>";
-                        if ($condicion == 0) {
-                            echo '<button class="btn btn-danger btn-ban" id="' . $row['id'] . '">Ban</button>';
-                        } else if ($condicion == 1) {
-                            echo '<button class="btn btn-secondary btn-ban" id="' . $row['id'] . '">Rehabilitar</button>';
-                        };
-                        echo "</td>";
-                        echo "<td>";
-                        if ($admin == 0) {
-                            echo '<button class="btn btn-success btn-admin" id="' . $row['id'] . '">Admin</button>';
-                        } else if ($admin == 1) {
-                            echo '<button class="btn btn-secondary btn-admin" id="' . $row['id'] . '">Quitar</button>';
-                        };
-                        echo "</td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "0 resultados";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td data-column='id'>" . $row['id'] . "</td>";
+                    echo "<td data-column='nombre_usuario'>" . $row['nombre_usuario'] . "</td>";
+                    echo "<td data-column='visibilidad'>" . $row['visibilidad'] . "</td>";
+                    echo "<td data-column='contenido'>" . $row['contenido'] . "</td>";
+                    echo "<td data-column='fechaHora'>" . $row['fechaHora'] . "</td>";
+                    echo "<td data-column='valoracionesPos'>" . $row['valoracionesPos'] . "</td>";
+                    echo "<td data-column='valoracionesNeg'>" . $row['valoracionesNeg'] . "</td>";
+                    echo '<td><button class="btn btn-danger btn-com" id="' . $row['id'] . '">Eliminar</button></td>';
+                    echo "</tr>";
                 }
+
                 ?>
             </tbody>
         </table>
     </div>
 
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btnPos = document.getElementById("pos");
+        const btnNeg = document.getElementById("neg");
+
+        btnPos.addEventListener("click", function () {
+            sortTable("valoracionesPos");
+        });
+
+        btnNeg.addEventListener("click", function () {
+            sortTable("valoracionesNeg");
+        });
+
+        function sortTable(columnName) {
+            const table = document.getElementById("tablaUsuarios");
+            const rows = Array.from(table.getElementsByTagName("tr"));
+
+            rows.sort(function (a, b) {
+                const aValue = parseInt(a.querySelector("td[data-column='" + columnName + "']").innerText);
+                const bValue = parseInt(b.querySelector("td[data-column='" + columnName + "']").innerText);
+
+                return bValue - aValue;
+            });
+
+            rows.forEach(function (row) {
+                table.appendChild(row);
+            });
+        }
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/admin_panel.js"></script>
+<script src="js/admin_comments.js"></script>
 
 </html>

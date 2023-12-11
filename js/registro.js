@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // Manejar el envío del formulario de registro con AJAX
   $("#registerForm").submit(function (event) {
-    console.log("AAA");
+    //console.log("AAA");
     event.preventDefault(); // Evitar que se envíe el formulario de la manera convencional
 
     // Obtener los valores de los campos del formulario de registro
@@ -56,7 +56,15 @@ $(document).ready(function () {
             text: "Recuerde su contraseña o utilice otro",
           });
           $("#registerForm")[0].reset();
-        } else {
+        } else if (response.status === "vacio") {
+          // Mostrar SweetAlert2 en caso de error
+          Swal.fire({
+            icon: "error",
+            title: "Faltan datos",
+            text: "Recuerde rellenar todo el formulario",
+          });
+          $("#registerForm")[0].reset();
+        }else {
           Swal.fire({
             icon: "error",
             title: "Error",

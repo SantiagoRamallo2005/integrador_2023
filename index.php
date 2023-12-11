@@ -37,7 +37,6 @@ http://www.templatemo.com/tm-511-journey
                     <nav class="navbar navbar-expand-lg narbar-light">
                         <a class="navbar-brand mr-auto" href="#">
                             <img src="img/logo.png" alt="Site logo">
-                            Journey
                         </a>
                         <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -185,7 +184,7 @@ http://www.templatemo.com/tm-511-journey
                                     </div>
                                     <div class="form-group tm-form-group tm-form-group-pad tm-form-group-custom">
                                         <label for="btnSubmit">&nbsp;</label>
-                                        <button type="submit" class="btn btn-primary tm-btn tm-btn-search text-uppercase" id="btnSubmit">Publicar</button>
+                                        <button type="button" class="btn btn-primary tm-btn tm-btn-search text-uppercase" data-toggle="modal" data-target="#Modal" id="btnSubmit">Publicar</button>
                                     </div>
                                 </div>
                             </form>
@@ -220,28 +219,28 @@ http://www.templatemo.com/tm-511-journey
                     </li>
 
                 </ul>
-                <div class="tab-content clearfix">
+                <div class="tab-content clearfix" id="comentarios">
 
-                    <!-- Tab 1 -->
-                    <div class="tab-pane fade" id="1a">
-                        <div class="tm-recommended-place-wrap">
+                <!-- Tab 1 -->
+                <div class="tab-pane fade" id="1a">
+                    <div class="tm-recommended-place-wrap" id="comentarioOpinion">
 
-                        </div>
-                    </div> <!-- tab-pane -->
+                    </div>
+                </div> <!-- tab-pane -->
 
-                    <!-- Tab 2 -->
-                    <div class="tab-pane fade" id="2a">
-                        <div class="tm-recommended-place-wrap">
+                <!-- Tab 2 -->
+                <div class="tab-pane fade" id="2a">
+                    <div class="tm-recommended-place-wrap" id="comentarioSugerencia">
 
-                        </div>
-                    </div> <!-- tab-pane -->
+                    </div>
+                </div> <!-- tab-pane -->
 
-                    <!-- Tab 3 -->
-                    <div class="tab-pane fade" id="3a">
-                        <div class="tm-recommended-place-wrap">
+                <!-- Tab 3 -->
+                <div class="tab-pane fade" id="3a">
+                    <div class="tm-recommended-place-wrap" id="comentarioQueja">
 
-                        </div>
-                    </div> <!-- tab-pane -->
+                    </div>
+                </div> <!-- tab-pane -->
 
                 </div>
             </div>
@@ -313,6 +312,7 @@ http://www.templatemo.com/tm-511-journey
     </script>
     <script src="js/registro.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/show_commentsIndex.js"></script>
 
 </body>
 

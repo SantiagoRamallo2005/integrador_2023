@@ -15,19 +15,30 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // Usuario encontrado
     $row = $result->fetch_assoc();
-    $hashedPassword = $row['contrasena'];
-
-    // Verificar la contraseña
-    if (password_verify($loginPassword, $hashedPassword)) {
-        // Iniciar sesión y establecer variables de sesión
-        echo 'exito';
-        $_SESSION['id'] = $row['id'];
-        
+    $condition = $row['condicion'];
+    if ($condition == 1) {
+        echo json_encode(["status" => "ban"]);
     } else {
-        echo "passError";
+        $hashedPassword = $row['contrasena'];
+
+        // Verificar la contraseña
+        if (password_verify($loginPassword, $hashedPassword)) {
+            // Iniciar sesión y establecer variables de sesión
+            $_SESSION['id'] = $row['id'];
+
+            if($row['adminValue'] === "1"){
+                echo json_encode(["status" => "admin"]);
+            }else{
+                echo json_encode(["status" => "success"]);
+            }
+            
+        } else {
+            echo json_encode(["status" => "error"]);
+        }
     }
+
 } else {
-    echo "inexistente";
+    echo json_encode(["status" => "inexistente"]);
 }
 
 // Cerrar la conexión
