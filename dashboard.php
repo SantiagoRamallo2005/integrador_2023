@@ -8,6 +8,16 @@ $row = $result->fetch_assoc();
 ?>
 
 
+<?php
+include("sessionAdmin.php");
+include("connection.php");
+$id = $_SESSION['id'];
+$sql = "SELECT * FROM users WHERE id = '$id'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +27,7 @@ $row = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap-glyphicons.css" rel="stylesheet">
     <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="css/templatemo-style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Administracion</title>
@@ -24,8 +35,21 @@ $row = $result->fetch_assoc();
 
 <body>
     <div class="w3-sidebar w3-bar-block containerA" style="width: 15%;" id="mySidebar">
+    <div class="w3-sidebar w3-bar-block containerA" style="width: 15%;" id="mySidebar">
 
         <div role="group" aria-label="Basic example" style="margin-top: 25%;">
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="dashboard.php">
+                <div class="w3-bar-item w3-button">Users</div>
+            </a>
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="admin_opiniones.php">
+                <div class="w3-bar-item w3-button">Lista de opiniones</div>
+            </a>
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="admin_sugerencias.php">
+                <div class="w3-bar-item w3-button">Lista de sugerencias</div>
+            </a>
+            <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="admin_quejas.php">
+                <div class="w3-bar-item w3-button">Lista de quejas</div>
+            </a>
             <a class="link-offset-2 link-underline link-underline-opacity-0 text-light" href="dashboard.php">
                 <div class="w3-bar-item w3-button">Users</div>
             </a>
@@ -119,6 +143,8 @@ $row = $result->fetch_assoc();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/admin_panel.js"></script>
+
 <script src="js/admin_panel.js"></script>
 
 </html>

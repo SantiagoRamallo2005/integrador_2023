@@ -5,6 +5,10 @@ $id = $_SESSION['id'];
 $sql = "SELECT * FROM users WHERE id = '$id'";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+$id = $_SESSION['id'];
+$sql = "SELECT * FROM users WHERE id = '$id'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +65,9 @@ http://www.templatemo.com/tm-511-journey
 
                                 <div class="ms-auto nav-item">
                                     <div class="nav-link">
+                                    <div class="nav-link">
                                         <?php
+                                        echo $row['nombreVisible'];
                                         echo $row['nombreVisible'];
                                         ?>
                                     </div>
@@ -97,14 +103,17 @@ http://www.templatemo.com/tm-511-journey
                         <div class="row tm-banner-row" id="tm-section-search">
 
                             <form id="commentForm" class="tm-search-form tm-section-pad-2">
+                            <form id="commentForm" class="tm-search-form tm-section-pad-2">
                                 <div class="form-row tm-search-form-row">
                                     <div class="form-group tm-form-group tm-form-group-pad tm-form-group-1">
                                         <label for="inputCity">Escribe tu opinion</label>
+                                        <textarea name="destination" type="text" class="form-control" id="opinion" placeholder="Escribe tu comentario"></textarea>
                                         <textarea name="destination" type="text" class="form-control" id="opinion" placeholder="Escribe tu comentario"></textarea>
                                     </div>
                                     <div class="form-group tm-form-group tm-form-group-1">
                                         <div class="form-group tm-form-group tm-form-group-pad tm-form-group-2">
                                             <label for="inputRoom">Tipo de comentario</label>
+                                            <select name="room" class="form-control tm-select" id="tipo">
                                             <select name="room" class="form-control tm-select" id="tipo">
                                                 <option value="Opinion" selected>Opinion</option>
                                                 <option value="Queja">Queja</option>
@@ -113,6 +122,7 @@ http://www.templatemo.com/tm-511-journey
                                         </div>
                                         <div class="form-group tm-form-group tm-form-group-pad tm-form-group-2">
                                             <label for="inputAdult">¿Tu opinion sera publica?</label>
+                                            <select name="adult" class="form-control tm-select" id="visibilidad">
                                             <select name="adult" class="form-control tm-select" id="visibilidad">
                                                 <option value="Publica" selected>Publica</option>
                                                 <option value="Privada">Privada</option>
@@ -131,6 +141,7 @@ http://www.templatemo.com/tm-511-journey
                                     </div>
                                     <div class="form-group tm-form-group tm-form-group-pad tm-form-group-custom">
                                         <label for="btnSubmit">&nbsp;</label>
+                                        <button type="submit" class="btn btn-primary tm-btn tm-btn-search text-uppercase" id="btnSubmit" href="logout.php">Publicar</button>
                                         <button type="submit" class="btn btn-primary tm-btn tm-btn-search text-uppercase" id="btnSubmit" href="logout.php">Publicar</button>
                                     </div>
                                 </div>
@@ -167,9 +178,11 @@ http://www.templatemo.com/tm-511-journey
 
                 </ul>
                 <div class="tab-content clearfix" id="comentarios">
+                <div class="tab-content clearfix" id="comentarios">
 
                     <!-- Tab 1 -->
                     <div class="tab-pane fade" id="1a">
+                        <div class="tm-recommended-place-wrap" id="comentarioOpinion">
                         <div class="tm-recommended-place-wrap" id="comentarioOpinion">
 
                         </div>
@@ -178,6 +191,7 @@ http://www.templatemo.com/tm-511-journey
                     <!-- Tab 2 -->
                     <div class="tab-pane fade" id="2a">
                         <div class="tm-recommended-place-wrap" id="comentarioSugerencia">
+                        <div class="tm-recommended-place-wrap" id="comentarioSugerencia">
 
                         </div>
                     </div> <!-- tab-pane -->
@@ -185,10 +199,34 @@ http://www.templatemo.com/tm-511-journey
                     <!-- Tab 3 -->
                     <div class="tab-pane fade" id="3a">
                         <div class="tm-recommended-place-wrap" id="comentarioQueja">
+                        <div class="tm-recommended-place-wrap" id="comentarioQueja">
 
                         </div>
                     </div> <!-- tab-pane -->
 
+                </div>
+            </div>
+
+            <!-- Modal de Edición -->
+            <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEditarLabel">Editar Comentario</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formEditarComentario">
+                                <div class="form-group">
+                                    <label for="contenidoEditar">Nuevo Contenido:</label>
+                                    <textarea class="form-control" id="contenidoEditar" name="contenidoEditar" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -282,6 +320,10 @@ http://www.templatemo.com/tm-511-journey
     </script>
     <script src="js/registro.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/comment.js"></script>
+    <script src="js/show_comments.js"></script>
+    <script src="js/likedislike.js"></script>
+    <script src="js/editDelete_comments.js"></script>
     <script src="js/comment.js"></script>
     <script src="js/show_comments.js"></script>
     <script src="js/likedislike.js"></script>

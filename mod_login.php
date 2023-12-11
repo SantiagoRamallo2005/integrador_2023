@@ -39,9 +39,9 @@ if ($result->num_rows > 0) {
 
 } else {
     echo json_encode(["status" => "inexistente"]);
+    echo json_encode(["status" => "inexistente"]);
 }
 
 // Cerrar la conexión
 $conn->close();
 ?>
-

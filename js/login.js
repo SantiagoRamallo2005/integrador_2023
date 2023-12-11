@@ -16,7 +16,9 @@ $(document).ready(function() {
                 loginPassword: loginPassword
             },
             dataType: "json",
+            dataType: "json",
             success: function(data) {
+                if (data.status === 'success') {
                 if (data.status === 'success') {
                     console.log(data);
                     window.location = "logged.php";
